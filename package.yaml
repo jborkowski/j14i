@@ -1,0 +1,7 @@
+dependencies:
+  - base == 4.*
+  - hakyll == 4.15.*
+  - hakyll-sass
+executables:
+  site:
+    main: site.hs
