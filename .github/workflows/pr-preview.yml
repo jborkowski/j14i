@@ -1,0 +1,175 @@
+name: PR Preview & E2E Tests
+
+on:
+  pull_request:
+    branches: ['*']
+  push:
+    branches: ['claude/*']
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run E2E tests
+        run: npm test
+
+      - name: Build site
+        run: npm run build
+
+      - name: Run screenshot tests
+        run: npm run test:screenshots
+
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots-${{ github.event.pull_request.number || github.sha }}
+          path: screenshots/
+          retention-days: 30
+
+      - name: Verify build output
+        run: |
+          echo "Checking build output..."
+          ls -la _site/
+
+          # Verify essential files exist
+          test -f _site/index.html || (echo "❌ index.html not found" && exit 1)
+          test -d _site/css || (echo "❌ css directory not found" && exit 1)
+          test -d _site/posts || (echo "❌ posts directory not found" && exit 1)
+
+          echo "✅ Build verification passed!"
+
+      - name: Test HTML validity
+        run: |
+          echo "Testing HTML structure..."
+
+          # Check index.html contains essential elements
+          grep -q "TiL Microblog" _site/index.html || (echo "❌ Title missing" && exit 1)
+          grep -q "post-list" _site/index.html || (echo "❌ Post list missing" && exit 1)
+          grep -q "theme-toggle" _site/index.html || (echo "❌ Theme toggle missing" && exit 1)
+
+          echo "✅ HTML validation passed!"
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-preview-${{ github.event.pull_request.number || github.sha }}
+          path: _site/
+          retention-days: 7
+
+      - name: Generate preview info
+        if: github.event_name == 'pull_request'
+        run: |
+          cat << 'EOF' > preview-info.md
+          ## 🎉 Preview Build Ready!
+
+          Your site has been built successfully!
+
+          ### 📸 Screenshots Available
+          Download the `screenshots-${{ github.event.pull_request.number }}` artifact to see visual previews of:
+          - Homepage (desktop & mobile, light & dark modes)
+          - Post pages (desktop, light & dark modes)
+          - Feed interactions
+          - Theme toggle
+          - Tablet views
+
+          ### 🌐 Full Site Preview
+          Download the `site-preview-${{ github.event.pull_request.number }}` artifact to preview locally:
+
+          1. Download and extract the artifact
+          2. Run: `npx serve _site`
+          3. Open http://localhost:3000
+
+          ### Build Stats
+          - Workflow: ${{ github.workflow }}
+          - Commit: ${{ github.sha }}
+          - Built at: $(date -u)
+
+          EOF
+          cat preview-info.md
+
+      - name: Comment on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const previewInfo = fs.readFileSync('preview-info.md', 'utf8');
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: previewInfo
+            });
+
+  deploy-preview:
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build site
+        run: npm run build
+
+      - name: Deploy to GitHub Pages (Preview)
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          publish_branch: gh-pages-preview-pr-${{ github.event.pull_request.number }}
+          force_orphan: true
+
+      - name: Comment preview URL
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prNumber = context.issue.number;
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const previewUrl = `https://${owner}.github.io/${repo}/`;
+
+            const comment = `## 🚀 Preview Deployed!
+
+            Your preview is available at:
+            **${previewUrl}**
+
+            Note: If this is your first preview, you may need to enable GitHub Pages in your repository settings.
+
+            The preview will be updated automatically when you push new commits to this PR.
+            `;
+
+            github.rest.issues.createComment({
+              issue_number: prNumber,
+              owner: owner,
+              repo: repo,
+              body: comment
+            });

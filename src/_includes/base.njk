@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if title %}{{ title }} - {% endif %}TiL Microblog</title>
+  <meta name="description" content="Daily Today I Learned entries - a personal microblog of discoveries and learnings">
+  <link rel="stylesheet" href="/css/style.css">
+  <script>
+    // Load theme preference before page renders to avoid flash
+    (function() {
+      const theme = localStorage.getItem('theme') || 'dark';
+      if (theme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+    <span id="themeIcon">☀️ Light Mode</span>
+  </button>
+  <div class="container">
+    <header>
+      <h1>TiL Microblog</h1>
+      <p class="subtitle">Today I Learned - Daily discoveries and learnings</p>
+    </header>
+
+    <main>
+      {{ content | safe }}
+    </main>
+
+    <footer>
+      <p>Built with Eleventy | Colorblind-friendly theme switcher</p>
+    </footer>
+  </div>
+
+  <script>
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const html = document.documentElement;
+
+    function updateThemeButton(theme) {
+      if (theme === 'light') {
+        themeIcon.textContent = '🌙 Dark Mode';
+      } else {
+        themeIcon.textContent = '☀️ Light Mode';
+      }
+    }
+
+    // Initialize button text
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+    updateThemeButton(currentTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+      if (newTheme === 'light') {
+        html.setAttribute('data-theme', 'light');
+      } else {
+        html.removeAttribute('data-theme');
+      }
+
+      localStorage.setItem('theme', newTheme);
+      updateThemeButton(newTheme);
+    });
+  </script>
+</body>
+</html>
