@@ -183,6 +183,59 @@ j14i/
 | `npm run fetch-notes` | Fetch multiple notes from Apple Notes |
 | `npm run import-notes` | Import previously fetched notes |
 | `npm run publish` | One-click: fetch latest note and build site |
+| `npm test` | Run E2E tests to verify build |
+| `npm run test:screenshots` | Take screenshots of all pages (requires build first) |
+| `npm run test:screenshots:ui` | Run screenshot tests in UI mode |
+
+## Testing & CI/CD
+
+### Local Testing
+
+Run tests locally to verify everything works:
+
+```bash
+# Build the site first
+npm run build
+
+# Run E2E validation tests
+npm test
+
+# Take screenshots (requires Playwright)
+npm run test:screenshots
+```
+
+Screenshots will be saved in the `screenshots/` directory with multiple views:
+- Desktop & mobile layouts
+- Light & dark themes
+- Homepage & post pages
+- Interaction states (hover, etc.)
+
+### Automated Testing on PRs
+
+Every pull request automatically runs:
+1. **Build validation** - Ensures site builds without errors
+2. **E2E tests** - Verifies HTML structure and critical elements
+3. **Screenshot tests** - Captures visual previews in multiple viewports
+4. **Artifact uploads** - Both screenshots and full site preview
+
+**On each PR, you get:**
+- 📸 Screenshots artifact with 8+ visual previews
+- 🌐 Full site build for local testing
+- 🚀 Optional GitHub Pages preview deployment
+- ✅ Automated checks and validations
+
+### Installing Playwright for Screenshots
+
+```bash
+# Install Playwright browsers (one-time setup)
+npx playwright install chromium
+
+# Run screenshot tests
+npm run test:screenshots
+
+# View screenshots interactively
+npm run test:screenshots:ui
+```
 
 ## Customization
 
@@ -212,6 +265,8 @@ Edit `src/_includes/base.njk` to change the site title and subtitle.
 - **AppleScript**: Apple Notes integration (macOS)
 - **Turndown**: HTML to Markdown conversion
 - **date-fns**: Date formatting and relative time display
+- **Playwright**: Screenshot testing and visual regression
+- **GitHub Actions**: CI/CD pipeline with automated testing
 
 ## License
 

@@ -6,6 +6,10 @@
   "scripts": {
     "start": "eleventy --serve",
     "build": "eleventy",
+    "test": "node scripts/test-e2e.js",
+    "test:screenshots": "playwright test",
+    "test:screenshots:ui": "playwright test --ui",
+    "test:screenshots:debug": "playwright test --debug",
     "fetch-latest": "node scripts/fetch-latest.js",
     "fetch-notes": "node scripts/fetch-notes.js",
     "import-notes": "node scripts/import-notes.js",
@@ -20,6 +24,7 @@
   "license": "ISC",
   "devDependencies": {
     "@11ty/eleventy": "^3.1.2",
+    "@playwright/test": "^1.56.1",
     "date-fns": "^4.1.0",
     "slugify": "^1.6.6",
     "turndown": "^7.2.1"

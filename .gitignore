@@ -3,3 +3,9 @@ _site/
 .notes-cache/
 .DS_Store
 *.log
+
+# Test artifacts
+screenshots/
+test-results/
+playwright-report/
+playwright/.cache/
