@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>CSS Container Queries Are Game Changers - TiL Microblog</title>
+  <meta name="description" content="Daily Today I Learned entries - a personal microblog of discoveries and learnings">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="alternate" type="application/atom+xml" title="TiL Microblog RSS Feed" href="/feed.xml">
+  <script>
+    // Load theme preference before page renders to avoid flash
+    (function() {
+      const theme = localStorage.getItem('theme') || 'dark';
+      if (theme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+    <span id="themeIcon">☀️ Light Mode</span>
+  </button>
+  <div class="container">
+    <header>
+      <h1>TiL Microblog</h1>
+      <p class="subtitle">Today I Learned - Daily discoveries and learnings</p>
+    </header>
+
+    <main>
+      
+<a href="/" class="back-link">← Back to all posts</a>
+
+<article>
+  <h2>CSS Container Queries Are Game Changers</h2>
+  <time class="post-date">October 22, 2025</time>
+
+  <div class="post-content">
+    <p>Today I learned about <strong>CSS Container Queries</strong> and they completely change how we think about responsive design!</p>
+<h2>What Are Container Queries?</h2>
+<p>Unlike media queries that respond to the viewport size, container queries respond to the size of a containing element. This means components can be truly reusable and adaptive.</p>
+<h2>Simple Example</h2>
+<pre><code class="language-css">.card-container {
+  container-type: inline-size;
+}
+
+@container (min-width: 400px) {
+  .card {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+  }
+}
+</code></pre>
+<h2>Why This Matters</h2>
+<ul>
+<li><strong>Component-based responsive design</strong>: Components adapt based on their container, not the viewport</li>
+<li><strong>True reusability</strong>: Same component works in sidebar, main content, or anywhere</li>
+<li><strong>Better than media queries</strong>: No need to write viewport-specific overrides</li>
+</ul>
+<p>This is supported in all modern browsers now (2023+). Time to start using it!</p>
+<h2>Resources</h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_container_queries">MDN Container Queries Guide</a></li>
+<li>Browser support is excellent across Chrome, Firefox, Safari, and Edge</li>
+</ul>
+
+  </div>
+</article>
+
+    </main>
+
+    <footer>
+      <p>Built with Eleventy | Colorblind-friendly theme switcher</p>
+      <a href="/feed.xml" class="rss-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 11a9 9 0 0 1 9 9"></path>
+          <path d="M4 4a16 16 0 0 1 16 16"></path>
+          <circle cx="5" cy="19" r="1"></circle>
+        </svg>
+        RSS Feed
+      </a>
+    </footer>
+  </div>
+
+  <script>
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const html = document.documentElement;
+
+    function updateThemeButton(theme) {
+      if (theme === 'light') {
+        themeIcon.textContent = '🌙 Dark Mode';
+      } else {
+        themeIcon.textContent = '☀️ Light Mode';
+      }
+    }
+
+    // Initialize button text
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+    updateThemeButton(currentTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+      if (newTheme === 'light') {
+        html.setAttribute('data-theme', 'light');
+      } else {
+        html.removeAttribute('data-theme');
+      }
+
+      localStorage.setItem('theme', newTheme);
+      updateThemeButton(newTheme);
+    });
+  </script>
+</body>
+</html>

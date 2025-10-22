@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>HTTP 103 Early Hints Can Speed Up Your Site - TiL Microblog</title>
+  <meta name="description" content="Daily Today I Learned entries - a personal microblog of discoveries and learnings">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="alternate" type="application/atom+xml" title="TiL Microblog RSS Feed" href="/feed.xml">
+  <script>
+    // Load theme preference before page renders to avoid flash
+    (function() {
+      const theme = localStorage.getItem('theme') || 'dark';
+      if (theme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+    <span id="themeIcon">☀️ Light Mode</span>
+  </button>
+  <div class="container">
+    <header>
+      <h1>TiL Microblog</h1>
+      <p class="subtitle">Today I Learned - Daily discoveries and learnings</p>
+    </header>
+
+    <main>
+      
+<a href="/" class="back-link">← Back to all posts</a>
+
+<article>
+  <h2>HTTP 103 Early Hints Can Speed Up Your Site</h2>
+  <time class="post-date">October 20, 2025</time>
+
+  <div class="post-content">
+    <p>Today I learned about <strong>HTTP 103 Early Hints</strong> - a relatively new status code that can significantly improve page load times!</p>
+<h2>What Is It?</h2>
+<p>HTTP 103 is an informational status code that allows the server to send headers with hints about resources the page will need, <em>while</em> the server is still preparing the main response.</p>
+<h2>How It Works</h2>
+<pre><code class="language-http">HTTP/1.1 103 Early Hints
+Link: &lt;/style.css&gt;; rel=preload; as=style
+Link: &lt;/script.js&gt;; rel=preload; as=script
+
+HTTP/1.1 200 OK
+Content-Type: text/html
+...
+</code></pre>
+<p>The browser receives the 103 response first and starts downloading the CSS and JavaScript immediately, even before receiving the HTML!</p>
+<h2>Real-World Impact</h2>
+<ul>
+<li><strong>Cloudflare reported</strong> 30% faster page loads for some sites</li>
+<li><strong>Shopify saw</strong> improvements of 20% on time-to-first-byte metrics</li>
+<li>Works best when your server has processing time before responding (database queries, API calls, etc.)</li>
+</ul>
+<h2>Browser Support</h2>
+<p>Supported in:</p>
+<ul>
+<li>Chrome/Edge 103+</li>
+<li>Firefox 103+</li>
+<li>Safari 16.4+</li>
+</ul>
+<h2>When To Use</h2>
+<p>Best for:</p>
+<ul>
+<li>Sites with server-side rendering that takes time</li>
+<li>When you know what resources will be needed before generating HTML</li>
+<li>Dynamic pages where the resource list is predictable</li>
+</ul>
+<p>This is a simple optimization that can have a big impact on perceived performance!</p>
+
+  </div>
+</article>
+
+    </main>
+
+    <footer>
+      <p>Built with Eleventy | Colorblind-friendly theme switcher</p>
+      <a href="/feed.xml" class="rss-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 11a9 9 0 0 1 9 9"></path>
+          <path d="M4 4a16 16 0 0 1 16 16"></path>
+          <circle cx="5" cy="19" r="1"></circle>
+        </svg>
+        RSS Feed
+      </a>
+    </footer>
+  </div>
+
+  <script>
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const html = document.documentElement;
+
+    function updateThemeButton(theme) {
+      if (theme === 'light') {
+        themeIcon.textContent = '🌙 Dark Mode';
+      } else {
+        themeIcon.textContent = '☀️ Light Mode';
+      }
+    }
+
+    // Initialize button text
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+    updateThemeButton(currentTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+      if (newTheme === 'light') {
+        html.setAttribute('data-theme', 'light');
+      } else {
+        html.removeAttribute('data-theme');
+      }
+
+      localStorage.setItem('theme', newTheme);
+      updateThemeButton(newTheme);
+    });
+  </script>
+</body>
+</html>

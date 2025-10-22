@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Home - TiL Microblog</title>
+  <meta name="description" content="Daily Today I Learned entries - a personal microblog of discoveries and learnings">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="alternate" type="application/atom+xml" title="TiL Microblog RSS Feed" href="/feed.xml">
+  <script>
+    // Load theme preference before page renders to avoid flash
+    (function() {
+      const theme = localStorage.getItem('theme') || 'dark';
+      if (theme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+    <span id="themeIcon">☀️ Light Mode</span>
+  </button>
+  <div class="container">
+    <header>
+      <h1>TiL Microblog</h1>
+      <p class="subtitle">Today I Learned - Daily discoveries and learnings</p>
+    </header>
+
+    <main>
+      
+<section>
+  <ul class="post-list"><li class="post-item">
+      <div class="post-avatar">T</div>
+      <div class="post-content-wrapper">
+        <div class="post-header">
+          <span class="post-author">TiL</span>
+          <span class="post-date">· 22 hours ago</span>
+        </div>
+        <h3 class="post-title">
+          <a href="/posts/2025-10-22-css-container-queries/">CSS Container Queries Are Game Changers</a>
+        </h3>
+        
+        <p class="post-excerpt">Discovered how CSS container queries solve responsive design problems that media queries can&#39;t handle.</p>
+        
+      </div>
+    </li><li class="post-item">
+      <div class="post-avatar">T</div>
+      <div class="post-content-wrapper">
+        <div class="post-header">
+          <span class="post-author">TiL</span>
+          <span class="post-date">· yesterday</span>
+        </div>
+        <h3 class="post-title">
+          <a href="/posts/2025-10-21-git-bisect/">Git Bisect Makes Bug Hunting Easy</a>
+        </h3>
+        
+        <p class="post-excerpt">Learned how to use git bisect to efficiently find the commit that introduced a bug using binary search.</p>
+        
+      </div>
+    </li><li class="post-item">
+      <div class="post-avatar">T</div>
+      <div class="post-content-wrapper">
+        <div class="post-header">
+          <span class="post-author">TiL</span>
+          <span class="post-date">· 2 days ago</span>
+        </div>
+        <h3 class="post-title">
+          <a href="/posts/2025-10-20-http-103-early-hints/">HTTP 103 Early Hints Can Speed Up Your Site</a>
+        </h3>
+        
+        <p class="post-excerpt">Discovered the HTTP 103 status code that lets servers send hints about resources while generating the main response.</p>
+        
+      </div>
+    </li></ul>
+</section>
+
+    </main>
+
+    <footer>
+      <p>Built with Eleventy | Colorblind-friendly theme switcher</p>
+      <a href="/feed.xml" class="rss-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 11a9 9 0 0 1 9 9"></path>
+          <path d="M4 4a16 16 0 0 1 16 16"></path>
+          <circle cx="5" cy="19" r="1"></circle>
+        </svg>
+        RSS Feed
+      </a>
+    </footer>
+  </div>
+
+  <script>
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const html = document.documentElement;
+
+    function updateThemeButton(theme) {
+      if (theme === 'light') {
+        themeIcon.textContent = '🌙 Dark Mode';
+      } else {
+        themeIcon.textContent = '☀️ Light Mode';
+      }
+    }
+
+    // Initialize button text
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+    updateThemeButton(currentTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+      if (newTheme === 'light') {
+        html.setAttribute('data-theme', 'light');
+      } else {
+        html.removeAttribute('data-theme');
+      }
+
+      localStorage.setItem('theme', newTheme);
+      updateThemeButton(newTheme);
+    });
+  </script>
+</body>
+</html>
