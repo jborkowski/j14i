@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>{% if title %}{{ title }} - {% endif %}TiL Microblog</title>
   <meta name="description" content="Daily Today I Learned entries - a personal microblog of discoveries and learnings">
   <link rel="stylesheet" href="/css/style.css">
+  <link rel="alternate" type="application/atom+xml" title="TiL Microblog RSS Feed" href="/feed.xml">
   <script>
     // Load theme preference before page renders to avoid flash
     (function() {
@@ -32,6 +33,14 @@
 
     <footer>
       <p>Built with Eleventy | Colorblind-friendly theme switcher</p>
+      <a href="/feed.xml" class="rss-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 11a9 9 0 0 1 9 9"></path>
+          <path d="M4 4a16 16 0 0 1 16 16"></path>
+          <circle cx="5" cy="19" r="1"></circle>
+        </svg>
+        RSS Feed
+      </a>
     </footer>
   </div>
 

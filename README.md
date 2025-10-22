@@ -6,11 +6,13 @@ A clean, minimal microblog for daily "Today I Learned" (TiL) entries. Built with
 
 - **Apple Notes Integration**: Seamlessly import notes from Apple Notes with one command (macOS only)
 - **Social Media Feed UI**: Clean, Twitter/Facebook-style timeline interface with avatars and relative timestamps
+- **Mobile-First Design**: Optimized for iPhone and Android with touch-friendly tap targets and readable typography
+- **RSS Feed**: Auto-generated Atom/RSS feed for easy subscription
 - **Static Site Generation**: Fast, secure, and easy to host anywhere
 - **Colorblind-Friendly Themes**: Toggle between light and dark modes with accessible color palettes
 - **Markdown Posts**: Write posts in simple Markdown format or import from Apple Notes
 - **One-Click Publish**: Fetch latest note and build site with a single command
-- **Mobile Responsive**: Looks great on all devices
+- **Fully Responsive**: Mobile-first responsive design with optimized breakpoints (mobile, tablet, desktop)
 
 ## Getting Started
 
@@ -38,6 +40,18 @@ npm run build
 ```
 
 The output will be in the `_site/` directory, ready to deploy.
+
+## RSS Feed
+
+Your blog automatically generates an RSS/Atom feed at `/feed.xml`. Readers can subscribe using any RSS reader app!
+
+The RSS link appears in the footer of every page with an icon. To customize your feed:
+
+1. Edit `src/_data/metadata.json` to update your site URL, author info, and description
+2. The feed includes all posts with full content
+3. Posts are automatically added when you build the site
+
+RSS readers like Feedly, NewsBlur, or Apple News can subscribe to your feed.
 
 ## Apple Notes Integration (macOS only)
 
@@ -239,6 +253,16 @@ npm run test:screenshots:ui
 
 ## Customization
 
+### Mobile-First Responsive Design
+
+The CSS is built with a mobile-first approach:
+- Base styles optimized for mobile phones (iPhone, Android)
+- 16px base font size for excellent mobile readability
+- Minimum 44px tap targets for touch interactions
+- Progressive enhancement for tablets (600px+) and desktop (1024px+)
+- Smooth scrolling on iOS with `-webkit-overflow-scrolling: touch`
+- Prevents font scaling issues on iOS landscape mode
+
 ### Changing Theme Colors
 
 Edit `src/css/style.css` and modify the CSS variables:
@@ -251,22 +275,54 @@ Edit `src/css/style.css` and modify the CSS variables:
 }
 ```
 
+### Customizing RSS Feed
+
+Edit `src/_data/metadata.json`:
+
+```json
+{
+  "title": "Your Blog Name",
+  "url": "https://yourblog.com",
+  "description": "Your blog description",
+  "author": {
+    "name": "Your Name",
+    "email": "you@example.com"
+  }
+}
+```
+
 ### Changing Site Title
 
 Edit `src/_includes/base.njk` to change the site title and subtitle.
 
 ## Technology Stack
 
-- **Eleventy (11ty)**: Static site generator
+- **Eleventy (11ty)**: Static site generator with RSS plugin
 - **Nunjucks**: Templating engine
 - **Markdown**: Content format
+- **Mobile-First CSS**: Responsive design with progressive enhancement
 - **CSS Variables**: Theme system with colorblind-friendly palettes
 - **Vanilla JavaScript**: Theme switcher and feed interactions
+- **Atom/RSS Feed**: Auto-generated feed for subscriptions
 - **AppleScript**: Apple Notes integration (macOS)
 - **Turndown**: HTML to Markdown conversion
 - **date-fns**: Date formatting and relative time display
 - **Playwright**: Screenshot testing and visual regression
 - **GitHub Actions**: CI/CD pipeline with automated testing
+
+## Mobile Optimization
+
+This blog is built mobile-first with these optimizations:
+
+- **Typography**: 16px base font, optimized line heights, word wrapping
+- **Touch Targets**: Minimum 44x44px clickable areas
+- **Viewport**: Proper meta tags with `viewport-fit=cover` for notched devices
+- **Font Rendering**: Anti-aliased text for crisp mobile display
+- **Smooth Scrolling**: iOS momentum scrolling for code blocks
+- **Breakpoints**:
+  - Mobile: < 600px (default, base styles)
+  - Tablet: 600px - 1023px
+  - Desktop: 1024px+
 
 ## License
 
