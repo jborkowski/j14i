@@ -1,0 +1,20 @@
+{
+  "name": "j14i",
+  "version": "1.0.0",
+  "description": "Daily TiL (Today I Learned) microblog",
+  "main": "index.js",
+  "scripts": {
+    "start": "eleventy --serve",
+    "build": "eleventy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://local_proxy@127.0.0.1:20896/git/jborkowski/j14i"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.2"
+  }
+}

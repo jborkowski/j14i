@@ -1,0 +1,14 @@
+---
+layout: base.njk
+---
+
+<a href="/" class="back-link">← Back to all posts</a>
+
+<article>
+  <h2>{{ title }}</h2>
+  <time class="post-date">{{ date | readableDate }}</time>
+
+  <div class="post-content">
+    {{ content | safe }}
+  </div>
+</article>
