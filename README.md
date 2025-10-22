@@ -4,10 +4,12 @@ A clean, minimal microblog for daily "Today I Learned" (TiL) entries. Built with
 
 ## Features
 
+- **Apple Notes Integration**: Seamlessly import notes from Apple Notes with one command (macOS only)
+- **Social Media Feed UI**: Clean, Twitter/Facebook-style timeline interface with avatars and relative timestamps
 - **Static Site Generation**: Fast, secure, and easy to host anywhere
 - **Colorblind-Friendly Themes**: Toggle between light and dark modes with accessible color palettes
-- **Markdown Posts**: Write posts in simple Markdown format
-- **Zero Configuration**: Works out of the box
+- **Markdown Posts**: Write posts in simple Markdown format or import from Apple Notes
+- **One-Click Publish**: Fetch latest note and build site with a single command
 - **Mobile Responsive**: Looks great on all devices
 
 ## Getting Started
@@ -37,7 +39,51 @@ npm run build
 
 The output will be in the `_site/` directory, ready to deploy.
 
-## Writing Posts
+## Apple Notes Integration (macOS only)
+
+The easiest way to add content! Write your TiL notes in Apple Notes and import them with one command.
+
+### Quick Workflow
+
+```bash
+# Fetch and publish latest note in one command
+npm run publish
+```
+
+This will:
+1. Get your latest note from Apple Notes
+2. Convert it to Markdown
+3. Add it to your blog
+4. Build the site
+
+### Detailed Commands
+
+```bash
+# Fetch latest note from Apple Notes and add to blog
+npm run fetch-latest
+
+# Fetch multiple notes (shows list to review before importing)
+npm run fetch-notes
+npm run import-notes
+```
+
+### Setting Up Apple Notes
+
+For best results, create a folder called "TiL" in Apple Notes and keep your blog posts there. The scripts will:
+- Look for notes in the "TiL" folder first
+- Fall back to all notes if no "TiL" folder exists
+- Convert HTML content to Markdown automatically
+- Extract title and excerpt from your note
+- Use the note's modification date as the post date
+
+### Tips for Writing in Apple Notes
+
+- **First line becomes the title**: Make it descriptive
+- **Use headings**: They convert to Markdown headers
+- **Format as usual**: Bold, italic, lists, and code blocks all convert properly
+- **Links work**: URLs in Apple Notes become Markdown links
+
+## Writing Posts Manually
 
 Create a new Markdown file in `src/posts/` with the following format:
 
@@ -108,19 +154,35 @@ npx gh-pages -d _site
 
 ```
 j14i/
+├── scripts/
+│   ├── fetch-latest.js     # Import latest note from Apple Notes
+│   ├── fetch-notes.js      # Fetch multiple notes
+│   └── import-notes.js     # Import fetched notes to blog
 ├── src/
 │   ├── _includes/          # Layout templates
 │   │   ├── base.njk        # Base HTML layout
 │   │   └── post.njk        # Post layout
 │   ├── css/
-│   │   └── style.css       # Styles with theme support
+│   │   └── style.css       # Feed-style UI with theme support
 │   ├── posts/              # Your TiL posts (Markdown)
 │   │   └── *.md
-│   └── index.njk           # Homepage
+│   └── index.njk           # Homepage timeline
 ├── _site/                  # Generated output (git ignored)
+├── .notes-cache/           # Temporary notes storage (git ignored)
 ├── .eleventy.js            # Eleventy configuration
 └── package.json
 ```
+
+## Available npm Commands
+
+| Command | Description |
+|---------|-------------|
+| `npm start` | Start development server with live reload |
+| `npm run build` | Build static site for production |
+| `npm run fetch-latest` | Fetch and import latest note from Apple Notes |
+| `npm run fetch-notes` | Fetch multiple notes from Apple Notes |
+| `npm run import-notes` | Import previously fetched notes |
+| `npm run publish` | One-click: fetch latest note and build site |
 
 ## Customization
 
@@ -145,8 +207,11 @@ Edit `src/_includes/base.njk` to change the site title and subtitle.
 - **Eleventy (11ty)**: Static site generator
 - **Nunjucks**: Templating engine
 - **Markdown**: Content format
-- **CSS Variables**: Theme system
-- **Vanilla JavaScript**: Theme switcher
+- **CSS Variables**: Theme system with colorblind-friendly palettes
+- **Vanilla JavaScript**: Theme switcher and feed interactions
+- **AppleScript**: Apple Notes integration (macOS)
+- **Turndown**: HTML to Markdown conversion
+- **date-fns**: Date formatting and relative time display
 
 ## License
 

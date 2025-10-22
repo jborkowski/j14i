@@ -4,18 +4,22 @@ title: Home
 ---
 
 <section>
-  <h2>Recent Learnings</h2>
-
   <ul class="post-list">
     {%- for post in collections.posts -%}
     <li class="post-item">
-      <h3 class="post-title">
-        <a href="{{ post.url }}">{{ post.data.title }}</a>
-      </h3>
-      <time class="post-date">{{ post.date | readableDate }}</time>
-      {% if post.data.excerpt %}
-      <p class="post-excerpt">{{ post.data.excerpt }}</p>
-      {% endif %}
+      <div class="post-avatar">T</div>
+      <div class="post-content-wrapper">
+        <div class="post-header">
+          <span class="post-author">TiL</span>
+          <span class="post-date">· {{ post.date | relativeTime }}</span>
+        </div>
+        <h3 class="post-title">
+          <a href="{{ post.url }}">{{ post.data.title }}</a>
+        </h3>
+        {% if post.data.excerpt %}
+        <p class="post-excerpt">{{ post.data.excerpt }}</p>
+        {% endif %}
+      </div>
     </li>
     {%- endfor -%}
   </ul>

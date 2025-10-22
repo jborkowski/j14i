@@ -1,4 +1,5 @@
 node_modules/
 _site/
+.notes-cache/
 .DS_Store
 *.log

@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "eleventy --serve",
-    "build": "eleventy"
+    "build": "eleventy",
+    "fetch-latest": "node scripts/fetch-latest.js",
+    "fetch-notes": "node scripts/fetch-notes.js",
+    "import-notes": "node scripts/import-notes.js",
+    "publish": "node scripts/fetch-latest.js && npm run build"
   },
   "repository": {
     "type": "git",
@@ -15,6 +19,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@11ty/eleventy": "^3.1.2"
+    "@11ty/eleventy": "^3.1.2",
+    "date-fns": "^4.1.0",
+    "slugify": "^1.6.6",
+    "turndown": "^7.2.1"
   }
 }
