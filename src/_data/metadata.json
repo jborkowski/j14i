@@ -1,0 +1,10 @@
+{
+  "title": "TiL Microblog",
+  "url": "https://yourdomain.com",
+  "language": "en",
+  "description": "Daily Today I Learned entries - a personal microblog of discoveries and learnings",
+  "author": {
+    "name": "Your Name",
+    "email": "you@example.com"
+  }
+}
